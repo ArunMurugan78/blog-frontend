@@ -1,0 +1,22 @@
+.nav {
+    position: fixed;
+    top: 0;
+    right: -15px;
+    background-color: white;
+    color: black;
+    font-family: 'Raleway', sans-serif;
+    height: 100%;
+    z-index: 1000000;
+    transition: 10s;
+}
+
+.sidelink {
+    color: #EEEEEE;
+    border-radius: 0;
+    background-color: #393e46;
+}
+
+.sidelink:hover {
+    background-color: #00adb5;
+    font-weight: bold;
+}

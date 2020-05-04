@@ -1,0 +1,30 @@
+.backpattern {
+    /* background-image: url('polygon2.png'); */
+    background-color: #eeeeee;
+}
+
+a,
+.link {
+    color: #00adb5;
+    text-decoration: none;
+}
+
+a:hover,
+.link:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.box {
+    font-family: 'Raleway', sans-serif;
+}
+
+.box:hover {
+    position: relative;
+    bottom: 5px;
+    transition: all 10s linear;
+}
+
+.black {
+    background-color: #393e46;
+}

@@ -1,0 +1,29 @@
+.drpdwn,
+.drpdwn:focus,
+.drpdwn:active,
+.drpdwn:hover,
+.drpdwn:visited {
+    background-color: #222831!important;
+    color: white !important;
+    border: none;
+}
+
+.link,
+.link:active,
+.link:visited,
+.link:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.themeblack {
+    background-color: #222831 !important;
+    border: none;
+    transition: all 0.5s linear;
+}
+
+.themegreen {
+    background-color: #00adb5 !important;
+    border: none;
+    transition: all 0.5s linear;
+}
