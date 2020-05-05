@@ -36,7 +36,7 @@ export const setLike = (id, type = SET_LIKE) => {
         if (type == SET_LIKE) {
             try {
                 await axios.post('/userdata/liked/' + id);
-                await axios.post('/post/like/' + id);
+
                 dispatch(saveLike(id, SET_LIKE));
 
             } catch (e) {
@@ -46,7 +46,7 @@ export const setLike = (id, type = SET_LIKE) => {
         } else {
             try {
                 await axios.delete('/userdata/liked/' + id);
-                await axios.delete('/post/like/' + id)
+
                 dispatch(saveLike(id, DEL_LIKE));
             } catch (e) {
                 console.log(e)
