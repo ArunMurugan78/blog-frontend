@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { MdAdd } from "react-icons/md";
-import {Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { RiUserFollowLine, RiUserUnfollowLine } from "react-icons/ri";
 import "./profile.css";
 import axios from "axios";
 import NavBar from "./layout/navbar";
-import { FaUserEdit } from 'react-icons/fa';
+import { FaUserEdit } from "react-icons/fa";
 
 export class Profiles extends Component {
   state = {
@@ -56,15 +56,34 @@ export class Profiles extends Component {
     axios
       .get("/userdata/profile/" + this.props.match.params.id)
       .then((res) =>
-        this.setState({
+        {
+          console.log(res.data)
+          this.setState({
           posts: res.data.posts,
           userName: res.data.userName,
           no_followers: res.data.no_followers,
           is_following: res.data.is_following,
           is_same: res.data.is_same,
-        })
+        })}
       )
       .catch((err) => console.log(err));
+  }
+
+  componentDidUpdate(prevProps,prevState) {
+    if(prevProps.match.params.id!==this.props.match.params.id)
+   { axios
+    .get("/userdata/profile/" + this.props.match.params.id)
+    .then((res) =>{
+      console.log(res.data)
+      this.setState({
+        posts: res.data.posts,
+        userName: res.data.userName,
+        no_followers: res.data.no_followers,
+        is_following: res.data.is_following,
+        is_same: res.data.is_same,
+      })}
+    )
+    .catch((err) => console.log(err));}
   }
 
   render() {
@@ -88,10 +107,22 @@ export class Profiles extends Component {
                 />
               </div>{" "}
               <div className="my-2 mx-4">
-                <h2> {this.state.userName}     {this.state.is_same ? <span className="text-info h4" ><Link to="/update"><FaUserEdit /></Link> </span>:null}</h2>{" "}
+                <h2>
+                  {" "}
+                  {this.state.userName}{" "}
+                  {this.state.is_same ? (
+                    <span className="text-info h4">
+                      {" "}
+                      <Link to="/update">
+                        {" "}
+                        <FaUserEdit />{" "}
+                      </Link>{" "}
+                    </span>
+                  ) : null}{" "}
+                </h2>{" "}
                 <span className="font-weight-bold my-2">
                   {" "}
-                  <span className="mx-2">{this.state.no_followers}</span>
+                  <span className="mx-2"> {this.state.no_followers} </span>
                   followers{" "}
                 </span>{" "}
                 <span>
@@ -101,7 +132,6 @@ export class Profiles extends Component {
                       <button
                         className="btn btn-primary mx-2"
                         onClick={this.toggleFollow}
-                   
                       >
                         Follow <RiUserFollowLine />{" "}
                       </button>
@@ -109,15 +139,13 @@ export class Profiles extends Component {
                       <button
                         className="btn btn-primary mx-2"
                         onClick={this.toggleFollow}
-                      
                       >
                         UnFollow <RiUserUnfollowLine />{" "}
                       </button>
                     )
-                  ) : <div>
-                    
-                 
-                    </div>}{" "}
+                  ) : (
+                    <div></div>
+                  )}{" "}
                 </span>{" "}
                 <p className="my-2"> Young Programming Enthuasist. </p>{" "}
               </div>{" "}
