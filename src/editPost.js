@@ -5,23 +5,25 @@ import axios from "axios";
 import NavBar from "./layout/navbar";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-class CreatePost extends React.Component {
+class EditPost extends React.Component {
   state = {
-    id: null,
+  
     content: "",
-   
+
     title: null,
 
     errMsg: null,
   };
   componentDidMount() {
-    console.log("auth", this.props.state);
+      console.log(this.props.match.params.id)
+    axios
+      .get("/post/server/" + this.props.match.params.id)
+      .then((res) =>
+        this.setState({ content: res.data.content, title: res.data.title })
+      )
+      .catch((err) => console.log(err.message));
   }
-  componentDidUpdate() {
-    if (this.props.state.isAuthenticated === false) {
-       this.props.history.push("/continueWith");
-    }
-  }
+ 
   handleEditorChange = (content, editor) => {
     this.setState({ content: content, errMsg: null });
     console.log(this.props);
@@ -29,25 +31,25 @@ class CreatePost extends React.Component {
   SubmitHandler = (event) => {
     event.preventDefault();
     console.log(this.state);
-    if (this.state.title && this.state.content ) {
+    if (this.state.title && this.state.content) {
       console.log("[Posting the Post]", this.state.content);
       axios
-        .post("/post/new", this.state)
-        .then((res) => {
-          console.log(res.data);
-          this.setState({ id: res.data.id });
+        .patch("/post/"+this.props.match.params.id, this.state)
+        .then(() => {
+          console.log("Successfully updated the post !",this.props)
+          this.props.history.push('/post/'+this.props.match.params.id)
         })
         .catch((err) => console.log(err.message));
-    } else{
-        let arr = [];
-     
-        if(!this.state.content){
-          arr.push("Content")
-        }
-        if(!this.state.title){
-          arr.push("Title");
-        }
-        this.setState({errMsg:arr.join(' , ')+" should not be empty"})
+    } else {
+      let arr = [];
+
+      if (!this.state.content) {
+        arr.push("Content");
+      }
+      if (!this.state.title) {
+        arr.push("Title");
+      }
+      this.setState({ errMsg: arr.join(" , ") + " should not be empty" });
     }
   };
 
@@ -55,10 +57,9 @@ class CreatePost extends React.Component {
     console.log("props", this.props);
     return (
       <div>
-        {this.state.id ? <Redirect to={"/post/" + this.state.id} /> : null}
+     
         <NavBar theme="black" fixed={null} />{" "}
         <Container className="p-4">
-          
           {this.state.errMsg ? (
             <Alert
               variant="danger"
@@ -76,13 +77,14 @@ class CreatePost extends React.Component {
                 type="text"
                 placeholder="Enter a Title"
                 required
-                onBlur={(e) => this.setState({ title: e.target.value })}
+                onChange={(e) => this.setState({ title: e.target.value })}
+                value={this.state.title}
               />
-              </Form.Group>
-            
+            </Form.Group>
+
             <Editor
-              value="edit me!"
               apiKey="zqmpq244uf6a2hgzsvh69ao3vneet2snobiqvjddfod8m614"
+              value={this.state.content}
               init={{
                 height: 500,
                 menubar: "file edit view insert format tools table help",
@@ -111,4 +113,4 @@ const mapStateToProps = (state) => {
     state,
   };
 };
-export default connect(mapStateToProps)(CreatePost);
+export default connect(mapStateToProps)(EditPost);

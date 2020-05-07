@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import { MdNotifications, MdAccountCircle } from "react-icons/md";
+import {RiAddLine} from 'react-icons/ri';
+import {BsCodeSlash,BsNewspaper} from 'react-icons/bs';
+import {IoIosPaper} from 'react-icons/io'
 import {
   Navbar,
   Nav,
   FormControl,
   Form,
   Button,
-  Dropdown,
+
 } from "react-bootstrap";
 import { connect } from "react-redux";
 import { ListGroup, Container } from "react-bootstrap";
@@ -36,67 +39,52 @@ export class NavBar extends Component {
     // borderBottom:'5px solid #00adb5'
     return (
       <div>
+         
         <Navbar
+        expanded={true}
           collapseOnSelect
-          expand="sm"
-          style={{ backgroundColor: backg }}
+          expand="md"
+          style={{ backgroundColor: backg}}
           variant="dark"
           id="navbar"
           {...prop}
         >
-          <Navbar.Toggle aria-controls="menu" />
-          <Navbar.Brand href="#home" className="mr-auto order-md-0">
+          {/* <Navbar.Toggle aria-controls="menu" /> */}
+         
+            <Link to="/home">
+            <Navbar.Brand href="#home" className="mr-auto  order-md-0">
+            <BsCodeSlash  style={{ fontSize: "27px", color: "white" }}
+            className="my-auto mx-3"/>
+         
             Blog
+             
           </Navbar.Brand>
 
-          <div className="order-md-2">
+            </Link>
+          
+          <div className="order-sm-2">
+           
+            <Link to="/">
+         <BsNewspaper
+            style={{ fontSize: "27px", color: "white" }}
+            className="my-auto mx-3"/></Link>
+         <Link to="/post/new">
+         <RiAddLine
+            style={{ fontSize: "27px", color: "white" }}
+            className="my-auto mx-3"/></Link>
             <MdNotifications
-              style={{ fontSize: "35px", color: "white" }}
-              className="my-auto mx-2"
+              style={{ fontSize: "27px", color: "white" }}
+              className="my-auto mx-3"
             />
             <MdAccountCircle
               onClick={this.toggleSideNav}
-              style={{ fontSize: "35px", color: "white" }}
-              className="my-auto mx-2"
+              style={{ fontSize: "27px", color: "white" }}
+              className="my-auto mx-3"
             />
-            {/* <Dropdown as="span" drop="left" >
-      <Dropdown.Toggle style={{backgroundColor:backg,border:'none'}} id="profileIcon">
-      <MdAccountCircle   style={{fontSize:'35px',color:'white'}}  className="my-auto mx-2"/>
-      </Dropdown.Toggle>
-      <Dropdown.Menu>
-        {this.props.state.isAuthenticated?(
-          <div>
-          <Dropdown.Item href={"/profile/"+this.props.state.user.id}>
-          Profile({this.props.state.user.username})
-        </Dropdown.Item>
-
-        <Dropdown.Item>
-        Account Settings
-      </Dropdown.Item>
-      <Dropdown.Item href="/logout">
-           Logout
-         </Dropdown.Item>
-      </div>
-        ):(
-          <div>
-           <Dropdown.Item >
-          <Link to="/continueWith" className="link">Sign Up</Link>
-         </Dropdown.Item>
-           <Dropdown.Item>
-           <Link to="/continueWith" className="link">Login</Link>
-         </Dropdown.Item>
-        
-         </div>
-        )}
-        
-        <Dropdown.Item>
-          About
-        </Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown> */}
+         
           </div>
           <Navbar.Collapse id="menu">
-            <Form inline className="ml-md-4 order-md-1 my-4 my-md-0">
+            <Form inline className="ml-md-4 ml-3 order-sm-1 my-4 my-sm-0">
               <FormControl
                 type="text"
                 placeholder="Search Blogs..."
@@ -120,7 +108,7 @@ export class NavBar extends Component {
                 style={{
                   height: "100%",
                   position: "fixed",
-                  zIndex:'1000',
+                  zIndex:1000,
                   backgroundColor: "rgba(0,0,0,0.4)",
                 }}
                 onClick={this.toggleSideNav}
@@ -177,9 +165,20 @@ export class NavBar extends Component {
                         Logout
                       </ListGroup.Item>
                       </a>
+                      <Link to={"/bookmarked"}>
                       <ListGroup.Item className='sidelink'>
-                        Bookmarked Posts
+                       
+                          Bookmarked Blogs
+                       
                       </ListGroup.Item>
+                      </Link>
+                      <Link to={"/post/new"}>
+                      <ListGroup.Item className='sidelink'>
+                       
+                         New Post
+                       
+                      </ListGroup.Item>
+                      </Link>
                     </div>
                   ) : (
                     <div>
@@ -200,6 +199,7 @@ export class NavBar extends Component {
             </div>
           </div>
         ) : null}
+      
       </div>
     );
   }

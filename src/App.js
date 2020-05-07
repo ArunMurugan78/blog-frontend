@@ -1,9 +1,10 @@
 import React from "react";
 import { useEffect } from "react";
+import Bookmarked from "./bookmarked";
 import "./App.css";
 import store from "./store";
 import { Provider } from "react-redux";
-import {SideNav} from './layout/sidenav';
+import EditPost from "./editPost";
 import Home from "./home";
 import LoginOptions from "./login-options";
 import UpdateUser from "./update";
@@ -27,24 +28,24 @@ function App() {
     console.log("Fetched The User");
   }, []);
   return (
- 
-      <BrowserRouter>
-        <AlertProvider template={AlertTemplate} {...options}>
-          <Provider store={store}>
+    <BrowserRouter>
+      <AlertProvider template={AlertTemplate} {...options}>
+        <Provider store={store}>
+          <Switch>
+            <Route component={LoginOptions} path="/continueWith" />
+            <Route component={Home} path="/home" />
+            <Route component={CreatePost} path="/post/new" />
+            <Route component={EditPost} path="/post/edit/:id" />
+            <Route component={DetailView} path="/post/:id" />
           
-            <Switch>
-              <Route component={LoginOptions} path="/continueWith" />
-              <Route component={Home} path="/home" />
-              <Route component={CreatePost} path="/post/new" />
-              <Route component={DetailView} path="/post/:id" />
-              <Route component={Profiles} path="/profile/:id" />
-              <Route component={UpdateUser} path="/update" />
-              <Route component={Root} path="/" />
-            </Switch>{" "}
-          </Provider>{" "}
-        </AlertProvider>{" "}
-      </BrowserRouter>
- 
+            <Route component={Profiles} path="/profile/:id" />
+            <Route component={Bookmarked} path="/bookmarked" />
+            <Route component={UpdateUser} path="/update" />
+            <Route component={Root} path="/" />
+          </Switch>{" "}
+        </Provider>{" "}
+      </AlertProvider>{" "}
+    </BrowserRouter>
   );
 }
 

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
-import { MdAdd } from "react-icons/md";
+import { Row, Col } from "react-bootstrap";
+
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { RiUserFollowLine, RiUserUnfollowLine } from "react-icons/ri";
@@ -8,7 +8,7 @@ import "./profile.css";
 import axios from "axios";
 import NavBar from "./layout/navbar";
 import { FaUserEdit } from "react-icons/fa";
-
+import Post from "./posts";
 export class Profiles extends Component {
   state = {
     posts: null,
@@ -55,35 +55,35 @@ export class Profiles extends Component {
   componentDidMount() {
     axios
       .get("/userdata/profile/" + this.props.match.params.id)
-      .then((res) =>
-        {
-          console.log(res.data)
-          this.setState({
+      .then((res) => {
+        console.log(res.data);
+        this.setState({
           posts: res.data.posts,
           userName: res.data.userName,
           no_followers: res.data.no_followers,
           is_following: res.data.is_following,
           is_same: res.data.is_same,
-        })}
-      )
+        });
+      })
       .catch((err) => console.log(err));
   }
 
-  componentDidUpdate(prevProps,prevState) {
-    if(prevProps.match.params.id!==this.props.match.params.id)
-   { axios
-    .get("/userdata/profile/" + this.props.match.params.id)
-    .then((res) =>{
-      console.log(res.data)
-      this.setState({
-        posts: res.data.posts,
-        userName: res.data.userName,
-        no_followers: res.data.no_followers,
-        is_following: res.data.is_following,
-        is_same: res.data.is_same,
-      })}
-    )
-    .catch((err) => console.log(err));}
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+      axios
+        .get("/userdata/profile/" + this.props.match.params.id)
+        .then((res) => {
+          console.log(res.data);
+          this.setState({
+            posts: res.data.posts,
+            userName: res.data.userName,
+            no_followers: res.data.no_followers,
+            is_following: res.data.is_following,
+            is_same: res.data.is_same,
+          });
+        })
+        .catch((err) => console.log(err));
+    }
   }
 
   render() {
@@ -144,14 +144,24 @@ export class Profiles extends Component {
                       </button>
                     )
                   ) : (
-                    <div></div>
+                    <div> </div>
                   )}{" "}
                 </span>{" "}
-                <p className="my-2"> Young Programming Enthuasist. </p>{" "}
               </div>{" "}
             </div>{" "}
           </Col>{" "}
         </Row>{" "}
+        <Row className="justify-content-center sticky">
+          <Col xs={12} md={6} lg={4}>
+            {" "}
+            {/* <h4 className="text-center raleway bg-light p-1  shadow-sm rounded-pill " style={{backgroundColor:'#393e46',color:'#EEEEEE'}}>Blogs By {this.state.userName}</h4> */}{" "}
+            <h4 className="text-center raleway p-1">
+              {" "}
+              Blogs By {this.state.userName}{" "}
+            </h4>{" "}
+          </Col>
+        </Row>
+        <Post query={["id=" + this.props.match.params.id]} />{" "}
       </div>
     );
   }
@@ -163,15 +173,3 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(Profiles);
-
-// <form
-// action="/update/avatar"
-// method="post"
-// enctype="multipart/form-data"
-// >
-// <label class="btn btn-primary">
-// <MdAdd/><input type="file" name="avatar" className="d-none"/>
-// </label>
-
-// <Button>Submit</Button>
-// </form>

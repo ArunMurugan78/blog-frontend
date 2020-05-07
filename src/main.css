@@ -4,18 +4,20 @@
 }
 
 a,
-.link {
-    color: #00adb5;
+.link,
+.link:visited {
+    color: black;
     text-decoration: none;
 }
 
 a:hover,
 .link:hover {
     text-decoration: none;
-    color: black;
+    color: #00adb5!important;
 }
 
-.box {
+.box,
+.raleway {
     font-family: 'Raleway', sans-serif;
 }
 
@@ -27,4 +29,34 @@ a:hover,
 
 .black {
     background-color: #393e46;
+}
+
+.createPost {
+    color: #00adb5;
+}
+
+.createPost:hover {
+    transform: scale(1.2);
+    transition: all 0.1s;
+}
+
+.btn-custom {
+    background-color: #00adb5;
+    color: white;
+}
+
+.btn-custom:hover,
+.btn-custom:active {
+    background-color: #128288;
+    color: white;
+}
+
+.btn-custom:disabled {
+    background-color: #00adb5;
+    color: white;
+    cursor: not-allowed;
+}
+
+.dropdown-toggle::after {
+    display: none;
 }
