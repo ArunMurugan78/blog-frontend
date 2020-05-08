@@ -6,6 +6,7 @@ const initialState = {
         bookmarked: null,
         liked: null,
         id: null,
+        description: null
     },
 };
 const userReducer = (state = initialState, action) => {
@@ -19,6 +20,7 @@ const userReducer = (state = initialState, action) => {
                     id: action.data._id,
                     bookmarked: action.data.bookmarked,
                     liked: action.data.liked,
+                    description: action.data.description
                 },
             };
         case SET_LIKE:

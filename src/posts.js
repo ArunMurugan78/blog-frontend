@@ -194,6 +194,7 @@ export class Post extends Component {
   render() {
     return (
       <div className="backpattern">
+        {this.state.isLoading?<div style={{position:'fixed',backgroundColor:'rgba(255,255,255)',width:'100vw',height:'100vh',top:0,zIndex:100}}></div>:null}
         <Modal show={this.state.confirmDelete} centered className="raleway">
           <Modal.Header>
             <Modal.Title>
@@ -224,7 +225,7 @@ export class Post extends Component {
             className="row justify-content-center backpattern raleway"
             style={{ backgroundColor: "#EEEEEE" }}
           >
-              {this.state.isLoading?<div><div class="lds-circle"><div></div></div><br/><small className="text-center">Loading...</small></div>:
+              {this.state.isLoading?<div ><div  style={{position:'fixed',top:'40vh',zIndex:10000}}><div class="lds-circle"><div></div></div><br/><small className="text-center ml-3">Loading....</small></div></div>:
             this.state.posts !== null
               ? this.state.posts.map((obj, i) => (
                   <div
@@ -357,6 +358,7 @@ export class Post extends Component {
                 ))
               : null }
           </div>{" "}
+          {!this.state.isLoading?
           <div className="row justify-content-center">
             <button
               disabled={!this.state.hasPrevPage}
@@ -373,7 +375,7 @@ export class Post extends Component {
             >
               Next >>
             </button>{" "}
-          </div>{" "}
+          </div>:null}
         </Container>{" "}
       </div>
     );

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { MdNotifications, MdAccountCircle } from "react-icons/md";
 import {RiAddLine} from 'react-icons/ri';
-import {BsCodeSlash,BsNewspaper} from 'react-icons/bs';
-import {IoIosPaper} from 'react-icons/io'
+import {BsNewspaper} from 'react-icons/bs';
+
+
 import {
   Navbar,
   Nav,
@@ -35,9 +36,10 @@ export class NavBar extends Component {
         fixed: "static",
       };
     }
-
+  
     // borderBottom:'5px solid #00adb5'
     return (
+
       <div>
          
         <Navbar
@@ -53,11 +55,9 @@ export class NavBar extends Component {
          
             <Link to="/home">
             <Navbar.Brand href="#home" className="mr-auto  order-md-0">
-            <BsCodeSlash  style={{ fontSize: "27px", color: "white" }}
-            className="my-auto mx-3"/>
-         
-            Blog
+             <span style={{fontFamily:"'Poppins', sans-serif",borderBottom:'2px solid white'}}>Overload</span>
              
+          
           </Navbar.Brand>
 
             </Link>

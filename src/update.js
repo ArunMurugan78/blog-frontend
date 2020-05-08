@@ -9,21 +9,32 @@ export class UpdateUser extends Component {
   state = {
     userName: null,
     img: null,
+    description:""
   };
   changeHandler = (event) => {
     this.setState({ userName: event.target.value });
   };
   componentDidMount() {
     if (this.props.state.isAuthenticated) {
-      this.setState({ userName: this.props.state.user.username });
+      this.setState({ userName: this.props.state.user.username,description:this.props.state.user.description });
     }
+  }
+  changeHandlerDesc = (event)=>{
+    if(this.state.description.split(' ').length>60){
+      this.props.alert.error("Max words allowed is 60");
+    }
+    else if(this.state.description.length>200){
+      this.props.alert.error("Max Characters allowed is 20");
+    }
+    else
+  {  this.setState({ description: event.target.value });}
   }
   submitHandler = async (event) => {
     event.preventDefault();
     if (this.state.userName.length < 4) {
       this.props.alert.show("User Name Should be atleast 4 characters Long");
     } else {
-      await axios.patch("/update/user", { userName: this.state.userName });
+      await axios.patch("/update/user", { userName: this.state.userName,description:this.state.description });
       this.props.alert.success("Profile Updated Successfully !");
     }
   };
@@ -54,26 +65,32 @@ export class UpdateUser extends Component {
               <Form>
                 <Form.Group controlId="UsernameUpdate">
                   <Form.Label> User Name </Form.Label>{" "}
-                  <Form.Row>
-                    <Col>
+                
                       <Form.Control
                         type="text"
                         placeholder="Enter new username"
                         value={this.state.userName}
                         onChange={(e) => this.changeHandler(e)}
                       />{" "}
-                    </Col>{" "}
-                    <Col>
-                      <Button
-                        variant="primary"
-                        type="submit"
-                        onClick={this.submitHandler}
-                      >
-                        Save UserName{" "}
-                      </Button>{" "}
-                    </Col>{" "}
-                  </Form.Row>{" "}
-                </Form.Group>{" "}
+           
+               
+                </Form.Group>
+                <hr/>
+                <Form.Group >
+                  <Form.Label> Say Something About You </Form.Label>{" "}
+                
+                      <Form.Control
+                        type="text"
+                        value={this.state.description}
+                        as="textarea"
+                        onChange={(e) => this.changeHandlerDesc(e)}
+                      />{" "}
+                      <Form.Text><small className="text-muted">*will be shown at your profile page</small></Form.Text>
+              
+                  
+                </Form.Group>
+                <Button variant="success" type="submit" block onClick={this.submitHandler}>Update Profile</Button>
+                {" "}
                 {/* <Form.Group controlId="FileUpdate">
                     <Form.Label>Profile Image</Form.Label>
                     <Form.Control type="file" onChange={e => this.setState({img:e.target.value})} placeholder="Browse Files" />

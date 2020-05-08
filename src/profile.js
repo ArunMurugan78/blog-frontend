@@ -16,6 +16,7 @@ export class Profiles extends Component {
     no_followers: null,
     is_following: null,
     is_same: null,
+    description:""
   };
   toggleFollow = async () => {
     try {
@@ -30,6 +31,7 @@ export class Profiles extends Component {
               no_followers: res.data.no_followers,
               is_following: res.data.is_following,
               is_same: res.data.is_same,
+              description:res.data.description
             })
           )
           .catch((err) => console.log(err));
@@ -43,6 +45,7 @@ export class Profiles extends Component {
               userName: res.data.userName,
               no_followers: res.data.no_followers,
               is_following: res.data.is_following,
+              description:res.data.description
             })
           )
           .catch((err) => console.log(err));
@@ -63,6 +66,7 @@ export class Profiles extends Component {
           no_followers: res.data.no_followers,
           is_following: res.data.is_following,
           is_same: res.data.is_same,
+          description:res.data.description
         });
       })
       .catch((err) => console.log(err));
@@ -80,6 +84,7 @@ export class Profiles extends Component {
             no_followers: res.data.no_followers,
             is_following: res.data.is_following,
             is_same: res.data.is_same,
+            description:res.data.description
           });
         })
         .catch((err) => console.log(err));
@@ -147,7 +152,11 @@ export class Profiles extends Component {
                     <div> </div>
                   )}{" "}
                 </span>{" "}
+                <p className="mx-2">
+                {this.state.description}
+              </p>
               </div>{" "}
+           
             </div>{" "}
           </Col>{" "}
         </Row>{" "}

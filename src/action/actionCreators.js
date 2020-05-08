@@ -34,7 +34,8 @@ export const setBookmark = (id, type = SET_BOOKMARK) => {
             try {
                 await axios.post("/userdata/bookmarked/" + id);
 
-            } catch {
+            } catch (err) {
+
                 console.log(err);
             }
         } else {
@@ -42,7 +43,8 @@ export const setBookmark = (id, type = SET_BOOKMARK) => {
             try {
                 await axios.delete("/userdata/bookmarked/" + id);
 
-            } catch {
+            } catch (err) {
+
                 console.log(err);
             }
         }
@@ -55,6 +57,7 @@ export const setLike = (id, type = SET_LIKE) => {
             try {
                 await axios.post("/userdata/liked/" + id);
             } catch (e) {
+
                 console.log(e);
             }
         } else {
@@ -62,6 +65,7 @@ export const setLike = (id, type = SET_LIKE) => {
             try {
                 await axios.delete("/userdata/liked/" + id);
             } catch (e) {
+
                 console.log(e);
             }
         }
