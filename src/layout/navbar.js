@@ -41,7 +41,7 @@ export class NavBar extends Component {
       <div>
          
         <Navbar
-        expanded={true}
+      
           collapseOnSelect
           expand="md"
           style={{ backgroundColor: backg}}
@@ -49,7 +49,7 @@ export class NavBar extends Component {
           id="navbar"
           {...prop}
         >
-          {/* <Navbar.Toggle aria-controls="menu" /> */}
+          <Navbar.Toggle aria-controls="menu" />
          
             <Link to="/home">
             <Navbar.Brand href="#home" className="mr-auto  order-md-0">

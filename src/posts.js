@@ -13,7 +13,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { FaBookmark } from "react-icons/fa";
 import { BsBookmark, BsThreeDotsVertical } from "react-icons/bs";
 
-import { Container, Dropdown ,Modal} from "react-bootstrap";
+import { Container, Dropdown, Modal } from "react-bootstrap";
 import { connect } from "react-redux";
 import { setLike, setBookmark } from "./action/actionCreators";
 import { Link } from "react-router-dom";
@@ -25,9 +25,9 @@ export class Post extends Component {
     page: 0,
     hasPrevPage: false,
     hasNextPage: false,
-    confirmDelete:false
-    ,
-    postIDtoDelete:null
+    confirmDelete: false,
+    postIDtoDelete: null,
+    isLoading: false,
   };
   likeHandler(id) {
     if (this.props.state.isAuthenticated) {
@@ -76,10 +76,11 @@ export class Post extends Component {
             hasPrevPage: res.data.hasPrevPage,
             totalpages: res.data,
             totalpages: res.data.totalPages,
-         
+            isLoading: false,
           });
         })
         .catch((err) => console.log(err.message));
+        this.setState({isLoading:true})
     }
   };
   previousPageHandler = () => {
@@ -99,10 +100,11 @@ export class Post extends Component {
             hasPrevPage: res.data.hasPrevPage,
             totalpages: res.data,
             totalpages: res.data.totalPages,
-        
+            isLoading: false,
           });
         })
         .catch((err) => console.log(err.message));
+        this.setState({isLoading:true})
     }
   };
   bookmarkHandler(id) {
@@ -137,13 +139,13 @@ export class Post extends Component {
           hasPrevPage: res.data.hasPrevPage,
           totalpages: res.data,
           totalpages: res.data.totalPages,
-        
+          isLoading: false,
         });
       })
       .catch((err) => console.log(err.message));
+      this.setState({isLoading:true})
   }
   componentDidUpdate(prevProps, prevState) {
-  
     if (prevProps !== this.props && prevProps.state.user) {
       console.log(this.props);
       if (
@@ -167,20 +169,24 @@ export class Post extends Component {
               hasPrevPage: res.data.hasPrevPage,
               totalpages: res.data,
               totalpages: res.data.totalPages,
-              
+              isLoading: false,
             });
           })
           .catch((err) => console.log(err.message));
+          this.setState({isLoading:true})
       }
     }
   }
-  toggleConfirmDelete = (id) => this.setState({confirmDelete:true,postIDtoDelete:id});
+  toggleConfirmDelete = (id) =>
+    this.setState({ confirmDelete: true, postIDtoDelete: id });
   deletePost = async (id) => {
     try {
-      
       await axios.delete("/post/" + id);
-      this.setState(state=> ({posts:state.posts.filter(obj => obj._id!=id),confirmDelete:false,postIDtoDelete:null}));
-      
+      this.setState((state) => ({
+        posts: state.posts.filter((obj) => obj._id != id),
+        confirmDelete: false,
+        postIDtoDelete: null,
+      }));
     } catch (e) {
       console.log(e);
     }
@@ -188,31 +194,38 @@ export class Post extends Component {
   render() {
     return (
       <div className="backpattern">
-        <Modal show={this.state.confirmDelete} centered  className="raleway">
-     <Modal.Header>
-       <Modal.Title>
-        <h1>Are you Sure ?</h1> 
-       </Modal.Title>
-     </Modal.Header>
-     <Modal.Body>
-       Hope you know what you are doing . You are about to delete this blog post
-     </Modal.Body>
-<Modal.Footer>
-  <button className="btn btn-secondary btn-md" onClick={()=>this.setState({confirmDelete:false})}>
-    Cancel
-  </button>
-  <button className="btn btn-danger btn-md" onClick={()=> this.deletePost(this.state.postIDtoDelete)}>
-   Delete
-  </button>
-</Modal.Footer>
-        </Modal>
+        <Modal show={this.state.confirmDelete} centered className="raleway">
+          <Modal.Header>
+            <Modal.Title>
+              <h1> Are you Sure ? </h1>{" "}
+            </Modal.Title>{" "}
+          </Modal.Header>{" "}
+          <Modal.Body>
+            Hope you know what you are doing.You are about to delete this blog
+            post{" "}
+          </Modal.Body>{" "}
+          <Modal.Footer>
+            <button
+              className="btn btn-secondary btn-md"
+              onClick={() => this.setState({ confirmDelete: false })}
+            >
+              Cancel{" "}
+            </button>{" "}
+            <button
+              className="btn btn-danger btn-md"
+              onClick={() => this.deletePost(this.state.postIDtoDelete)}
+            >
+              Delete{" "}
+            </button>{" "}
+          </Modal.Footer>{" "}
+        </Modal>{" "}
         <Container fluid>
           <div
-            className="row justify-content-center backpattern"
+            className="row justify-content-center backpattern raleway"
             style={{ backgroundColor: "#EEEEEE" }}
           >
-            {" "}
-            {this.state.posts !== null
+              {this.state.isLoading?<div><div class="lds-circle"><div></div></div><br/><small className="text-center">Loading...</small></div>:
+            this.state.posts !== null
               ? this.state.posts.map((obj, i) => (
                   <div
                     key={i}
@@ -233,28 +246,37 @@ export class Post extends Component {
                       </Link>{" "}
                       <Dropdown className="col-1">
                         <Dropdown.Toggle as="span" className="dropdown-toggle">
-                         <BsThreeDotsVertical/>
+                          <BsThreeDotsVertical />
                         </Dropdown.Toggle>
-
                         <Dropdown.Menu>
-                          {this.props.state.user && this.props.state.user.id==obj.userID?<div>
-                            <Dropdown.Item onClick={() => this.toggleConfirmDelete(obj._id)}>
-                            Delete
-                          </Dropdown.Item>
-                       
-                         <Dropdown.Item onClick={()=>this.props.history.push('/post/edit/'+obj._id)}>
-                           Edit
-                          </Dropdown.Item>
-                          </div>
-                          :null}
-                        
-                          
+                          {" "}
+                          {this.props.state.user &&
+                          this.props.state.user.id == obj.userID ? (
+                            <div>
+                              <Dropdown.Item
+                                onClick={() =>
+                                  this.toggleConfirmDelete(obj._id)
+                                }
+                              >
+                                Delete{" "}
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                onClick={() =>
+                                  this.props.history.push(
+                                    "/post/edit/" + obj._id
+                                  )
+                                }
+                              >
+                                Edit{" "}
+                              </Dropdown.Item>{" "}
+                            </div>
+                          ) : null}
                           <Dropdown.Item href="#/action-3">
                             Something else
-                          </Dropdown.Item>
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </div>
+                          </Dropdown.Item>{" "}
+                        </Dropdown.Menu>{" "}
+                      </Dropdown>{" "}
+                    </div>{" "}
                     <hr />
                     <div className="row justify-content-between px-2">
                       <div>
@@ -263,7 +285,7 @@ export class Post extends Component {
                         {obj.Author ? (
                           <Link to={"/profile/" + obj.userID}>
                             {" "}
-                            <span> {obj.Author} </span>
+                            <span> {obj.Author} </span>{" "}
                           </Link>
                         ) : (
                           "Anonymous"
@@ -326,14 +348,14 @@ export class Post extends Component {
                           <small className="text-muted"> Bookmark </small>{" "}
                         </div>{" "}
                         {/* <div className="col row">
-                                                                                                                                                                                                                <div className="col-12">   <AiOutlineShareAlt/></div>
-                                                                                                                                                                                         <small className="text-muted">share</small>
-                                                                                                                                                                                                                                                                  </div> */}{" "}
+                                                                                                                                                                                                                                            <div className="col-12">   <AiOutlineShareAlt/></div>
+                                                                                                                                                                                                                     <small className="text-muted">share</small>
+                                                                                                                                                                                                                                                                                              </div> */}{" "}
                       </div>{" "}
                     </div>{" "}
                   </div>
                 ))
-              : null}{" "}
+              : null }
           </div>{" "}
           <div className="row justify-content-center">
             <button
