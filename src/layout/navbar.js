@@ -1,17 +1,9 @@
 import React, { Component } from "react";
 import { MdNotifications, MdAccountCircle } from "react-icons/md";
-import {RiAddLine} from 'react-icons/ri';
-import {BsNewspaper} from 'react-icons/bs';
+import { RiAddLine } from "react-icons/ri";
+import { BsNewspaper } from "react-icons/bs";
 
-
-import {
-  Navbar,
-  Nav,
-  FormControl,
-  Form,
-  Button,
-
-} from "react-bootstrap";
+import { Navbar, Nav, FormControl, Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { ListGroup, Container } from "react-bootstrap";
 import { AiOutlineClose } from "react-icons/ai";
@@ -25,6 +17,7 @@ export class NavBar extends Component {
   toggleSideNav = () => {
     this.setState((state) => ({ showSideNav: !state.showSideNav }));
   };
+
   render() {
     let backg = "#00adb5";
     let foreg = "#222831";
@@ -36,42 +29,46 @@ export class NavBar extends Component {
         fixed: "static",
       };
     }
-  
+    
+
     // borderBottom:'5px solid #00adb5'
     return (
-
       <div>
-         
         <Navbar
-      
+          expanded={true}
           collapseOnSelect
           expand="md"
-          style={{ backgroundColor: backg}}
+          style={{ backgroundColor: backg }}
           variant="dark"
           id="navbar"
           {...prop}
         >
-          <Navbar.Toggle aria-controls="menu" />
-         
-            <Link to="/home">
-            <Navbar.Brand href="#home" className="mr-auto  order-md-0">
-             <span style={{fontFamily:"'Poppins', sans-serif",borderBottom:'2px solid white'}}>Overload</span>
-             
-          
-          </Navbar.Brand>
-
-            </Link>
-          
-          <div className="order-sm-2">
-           
+          <Link to="/home">
+            <Navbar.Brand href="#home" className="mr-auto   order-md-0">
+              <span
+                style={{
+                 // fontFamily: "'Raleway', sans-serif",
+                  // fontStyle:'italic',
+                  // fontWeight:'bold'
+                }}
+              >
+                Overload{" "}
+              </span>
+            </Navbar.Brand>
+          </Link>
+          <div className="order-md-2">
             <Link to="/">
-         <BsNewspaper
-            style={{ fontSize: "27px", color: "white" }}
-            className="my-auto mx-3"/></Link>
-         <Link to="/post/new">
-         <RiAddLine
-            style={{ fontSize: "27px", color: "white" }}
-            className="my-auto mx-3"/></Link>
+              <BsNewspaper
+                style={{ fontSize: "27px", color: "white" }}
+                className="my-auto mx-3"
+              />{" "}
+            </Link>{" "}
+            <Link to="/post/new">
+              <RiAddLine
+                style={{ fontSize: "27px", color: "white" }}
+                className="my-auto mx-3"
+              />{" "}
+            </Link>{" "}
             <MdNotifications
               style={{ fontSize: "27px", color: "white" }}
               className="my-auto mx-3"
@@ -81,25 +78,26 @@ export class NavBar extends Component {
               style={{ fontSize: "27px", color: "white" }}
               className="my-auto mx-3"
             />
-         
-          </div>
+          </div>{" "}
+          {/* <Navbar.Toggle aria-controls="menu" /> */}{" "}
           <Navbar.Collapse id="menu">
-            <Form inline className="ml-md-4 ml-3 order-sm-1 my-4 my-sm-0">
+            <Form inline className="ml-md-4  order-md-1 mt-4 mt-md-0">
               <FormControl
                 type="text"
                 placeholder="Search Blogs..."
-                className="mr-sm-2"
+                className="mx-1"
               />
               <Button variant="outline-light" className="my-2">
-                Search
-              </Button>
-            </Form>
+                Search{" "}
+              </Button>{" "}
+            </Form>{" "}
             <Nav>
+              {" "}
               {/* <Nav.Link href="#home">Home</Nav.Link>
-               */}
-            </Nav>
+               */}{" "}
+            </Nav>{" "}
           </Navbar.Collapse>
-        </Navbar>
+        </Navbar>{" "}
         {this.state.showSideNav ? (
           <div>
             <div className="row">
@@ -108,21 +106,18 @@ export class NavBar extends Component {
                 style={{
                   height: "100%",
                   position: "fixed",
-                  zIndex:1000,
+                  zIndex: 1000,
                   backgroundColor: "rgba(0,0,0,0.4)",
                 }}
                 onClick={this.toggleSideNav}
-              ></div>
+              ></div>{" "}
               <Container
                 className="nav shadow col-xs-12 col-sm-6 col-md-3 animated faster slideInRight"
                 style={{ backgroundColor: "#393e46" }}
                 fluid
               >
-
-                
                 <ListGroup style={{ width: "100%" }}>
                   <ListGroup.Item
-                  
                     style={{
                       backgroundColor: "#00adb5",
                       color: "white",
@@ -130,9 +125,11 @@ export class NavBar extends Component {
                     }}
                   >
                     <h3>
+                      {" "}
                       {this.props.state.isAuthenticated ? (
                         <span className="h5">
-                          {this.props.state.user.username}
+                          {" "}
+                          {this.props.state.user.username}{" "}
                         </span>
                       ) : (
                         <span className="h5">
@@ -142,64 +139,57 @@ export class NavBar extends Component {
                             className="my-auto mx-2"
                           />
                         </span>
-                      )}
-                      <span className="h4 ml-4 float-right"   onClick={this.toggleSideNav}>
+                      )}{" "}
+                      <span
+                        className="h4 ml-4 float-right"
+                        onClick={this.toggleSideNav}
+                      >
                         <AiOutlineClose />
-                      </span>
-                    </h3>
-                  </ListGroup.Item>
+                      </span>{" "}
+                    </h3>{" "}
+                  </ListGroup.Item>{" "}
                   {this.props.state.isAuthenticated ? (
                     <div>
-                       <Link to={"/profile/" + this.props.state.user.id}>
-                      <ListGroup.Item className='sidelink'>
-                       
+                      <Link to={"/profile/" + this.props.state.user.id}>
+                        <ListGroup.Item className="sidelink">
                           Profile
-                       
-                      </ListGroup.Item>
-                      </Link>
+                        </ListGroup.Item>{" "}
+                      </Link>{" "}
                       <a href="/logout">
-                      <ListGroup.Item
-                      
-                        className='sidelink'
-                      >
-                        Logout
-                      </ListGroup.Item>
-                      </a>
+                        <ListGroup.Item className="sidelink">
+                          Logout{" "}
+                        </ListGroup.Item>{" "}
+                      </a>{" "}
                       <Link to={"/bookmarked"}>
-                      <ListGroup.Item className='sidelink'>
-                       
+                        <ListGroup.Item className="sidelink">
                           Bookmarked Blogs
-                       
-                      </ListGroup.Item>
-                      </Link>
+                        </ListGroup.Item>{" "}
+                      </Link>{" "}
                       <Link to={"/post/new"}>
-                      <ListGroup.Item className='sidelink'>
-                       
-                         New Post
-                       
-                      </ListGroup.Item>
-                      </Link>
+                        <ListGroup.Item className="sidelink">
+                          New Post
+                        </ListGroup.Item>{" "}
+                      </Link>{" "}
                     </div>
                   ) : (
                     <div>
                       <Link to="/continueWith">
-                        <ListGroup.Item className='sidelink'>
-                          Sign Up
-                        </ListGroup.Item>
-                      </Link>
+                        <ListGroup.Item className="sidelink">
+                          Sign Up{" "}
+                        </ListGroup.Item>{" "}
+                      </Link>{" "}
                       <Link to="/continueWith">
-                        <ListGroup.Item className='sidelink'>
+                        <ListGroup.Item className="sidelink">
                           Log in
-                        </ListGroup.Item>
-                      </Link>
+                        </ListGroup.Item>{" "}
+                      </Link>{" "}
                     </div>
-                  )}
-                </ListGroup>
-              </Container>
-            </div>
+                  )}{" "}
+                </ListGroup>{" "}
+              </Container>{" "}
+            </div>{" "}
           </div>
         ) : null}
-      
       </div>
     );
   }

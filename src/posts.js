@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { withAlert } from "react-alert";
 import { withRouter } from "react-router-dom";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {
   SET_LIKE,
   DEL_LIKE,
@@ -9,7 +10,7 @@ import {
   SET_BOOKMARK,
 } from "./action/actionTypes";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-
+import {MdContentCopy} from 'react-icons/md';
 import { FaBookmark } from "react-icons/fa";
 import { BsBookmark, BsThreeDotsVertical } from "react-icons/bs";
 
@@ -18,6 +19,17 @@ import { connect } from "react-redux";
 import { setLike, setBookmark } from "./action/actionCreators";
 import { Link } from "react-router-dom";
 import "./main.css";
+const Share = (props) => {
+
+  return (
+  <div style={{psoition:"absolute"}}>
+   <ul>
+     <li>Copy</li>
+     <li>Facebook</li>
+     <li>twitter</li>
+   </ul>
+  </div>)
+}
 export class Post extends Component {
   state = {
     posts: [],
@@ -58,6 +70,13 @@ export class Post extends Component {
       this.props.alert.info("Sign in/ Sign Up to Like !");
       this.props.history.push("/continueWith");
     }
+  }
+  shouldComponentUpdate(nextProps,nextState){
+    // console.log("Props to be checked :",nextProps,this.props,nextState,this.state);
+    if(this.props.query && (this.props.query===nextProps.query && !this.state.isLoading)){
+      return false;
+    }
+    return true
   }
   nextPageHandler = () => {
     if (this.state.hasNextPage) {
@@ -124,14 +143,16 @@ export class Post extends Component {
     }
   }
   componentDidMount() {
+   
     let url = "/post/all";
     if (this.props.query) {
+
       url = url + "?" + this.props.query.join("&");
     }
     axios
       .get(url)
       .then((res) => {
-        console.log(res.data);
+        console.log("fetched data :",res.data);
         this.setState({
           posts: res.data.docs,
           page: res.data.page,
@@ -225,7 +246,7 @@ export class Post extends Component {
             className="row justify-content-center backpattern raleway"
             style={{ backgroundColor: "#EEEEEE" }}
           >
-              {this.state.isLoading?<div ><div  style={{position:'fixed',top:'40vh',zIndex:10000}}><div class="lds-circle"><div></div></div><br/><small className="text-center ml-3">Loading....</small></div></div>:
+              {this.state.isLoading?<div className="d-flex justify-content-center"><div  style={{position:'fixed',top:'40vh',zIndex:10000}}><div class="lds-circle"><div></div></div><br/><small className="text-center ml-3">Loading....</small></div></div>:
             this.state.posts !== null
               ? this.state.posts.map((obj, i) => (
                   <div
@@ -237,7 +258,7 @@ export class Post extends Component {
                     }}
                   >
                     <div className="row justify-content-between">
-                      <Link to={"/post/" + obj._id} className="col-11">
+                      <Link to={"/post/" + obj._id} className="col-10">
                         <div className="row justify-content-lg-between px-2">
                           <h1 className="px-2">
                             {" "}
@@ -272,9 +293,11 @@ export class Post extends Component {
                               </Dropdown.Item>{" "}
                             </div>
                           ) : null}
-                          <Dropdown.Item href="#/action-3">
-                            Something else
+                          <Dropdown.Item>
+                         Share 
+                     
                           </Dropdown.Item>{" "}
+                          
                         </Dropdown.Menu>{" "}
                       </Dropdown>{" "}
                     </div>{" "}

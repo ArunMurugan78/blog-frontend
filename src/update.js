@@ -20,10 +20,10 @@ export class UpdateUser extends Component {
     }
   }
   changeHandlerDesc = (event)=>{
-    if(this.state.description.split(' ').length>60){
+    if(this.state.description && this.state.description.split(' ').length>60){
       this.props.alert.error("Max words allowed is 60");
     }
-    else if(this.state.description.length>200){
+    else if(this.state.description && this.state.description.length>200){
       this.props.alert.error("Max Characters allowed is 20");
     }
     else
