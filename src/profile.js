@@ -43,7 +43,7 @@ export class Profiles extends Component {
           });
         
       } else {
-        this.setState({is_following:false})
+        this.setState({is_following:true})
         await axios.post("/userdata/follow/" + this.props.match.params.id);
         await axios
           .get("/userdata/profile/" + this.props.match.params.id)
