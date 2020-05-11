@@ -71,6 +71,10 @@
     animation-direction: alternate;
 }
 
+.raleway {
+    font-family: 'Raleway', sans-serif;
+}
+
 @-webkit-keyframes hvr-pulse-shrink {
     to {
         -webkit-transform: scale(0.9);

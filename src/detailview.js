@@ -34,7 +34,17 @@ export class DetailView extends Component {
     isLoading: false,
     is_liked: false,
     is_bookmarked: false,
+    userName:null,
+    description:null,
   };
+  fetchAuthor = async (id) => {
+    try {
+        const result = await axios.get('/userdata/author/'+id);
+        this.setState({userName:result.data.userName,description:result.data.description});
+    } catch (e) {
+        console.log(e)
+    }
+}
   likeHandler = (id) => {
     if (this.props.state.isAuthenticated) {
       if (this.state.is_liked) {
@@ -59,6 +69,10 @@ export class DetailView extends Component {
         this.setState({ is_bookmarked: true });
         this.props.alert.success("Bookmarked !");
       }
+    }
+    else{
+      this.props.alert.info("You need to Sign in /Sign up");
+      this.props.history.push('/continueWith');
     }
   }
   componentDidMount() {
@@ -90,7 +104,7 @@ export class DetailView extends Component {
     console.log(this.props);
     axios
       .get("/post/server/" + this.props.match.params.id)
-      .then((res) => this.setState({ post: res.data, isLoading: false }))
+      .then((res) => {this.setState({ post: res.data, isLoading: false });this.fetchAuthor(res.data.userID)})
       .catch((err) => this.setState({ errMsg: err.message, isLoading: false }));
     this.setState({ isLoading: true, is_liked: is_liked });
     $("img").addClass("img-fluid");
@@ -207,7 +221,10 @@ export class DetailView extends Component {
                       className="my-2 hvr-pulse-grow"
                     />
                   )
-                ) : null}
+                ) : <AiOutlineHeart
+                style={{ fontSize: "27px" }}
+                className="my-2 hvr-pulse-grow"
+              />}
               </div>
             ) : null}
         
@@ -224,7 +241,7 @@ export class DetailView extends Component {
                   ) : (
                     <BsBookmark style={{ fontSize: "20px" }} className="my-2 hvr-pulse-grow" />
                   )
-                ) : null}
+                ) :  <BsBookmark style={{ fontSize: "20px" }} className="my-2 hvr-pulse-grow" />}
               </div>
             ) : null}
            <div className="col-12">
@@ -257,6 +274,33 @@ export class DetailView extends Component {
             {this.state.post !== null
               ? ReactHtmlParser(this.state.post.content)
               : null}
+             
+              {!this.state.isLoading?<div className="raleway" style={{marginTop:'80px'}}>
+              <hr/>
+              <h3 className="mt-3">About the Author</h3>
+              {this.state.userName?<div className="row">
+            
+              <div>
+                <img
+                  src={"/userdata/" + this.state.post.userID + "/avatar"}
+                  style={{ height: "100px", width: "100px" }}
+                  className="  rounded m-2 mx-4 d-inline-block"
+                />
+              </div>
+              <div className="my-2 mx-4">
+                <h4>
+                  
+                <Link to={"/profile/"+this.state.post.userID}>{this.state.userName}</Link>  
+               
+                </h4>
+              
+                <p className="mx-2">
+                {this.state.description}
+              </p>
+              </div>
+           
+            </div>:null}
+            </div>:null}
           </Container>
         </div>
       </div>

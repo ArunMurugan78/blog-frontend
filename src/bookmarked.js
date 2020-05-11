@@ -10,7 +10,7 @@ export class Bookmarked extends Component {
       <div>
         <NavBar theme="black" />
         {this.props.state.user ? (
-          <div>
+          <div className="container-fluid">
             <div
               className="row justify-content-center"
               style={{ backgroundColor: "#EEEEEE" }}

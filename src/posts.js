@@ -149,6 +149,10 @@ export class Post extends Component {
         this.props.alert.success("Bookmarked !");
       }
     }
+    else{
+      this.props.alert.info("You need to Sign in /Sign up");
+      this.props.history.push('/continueWith');
+    }
   }
   componentDidMount() {
     let url = "/post/all";

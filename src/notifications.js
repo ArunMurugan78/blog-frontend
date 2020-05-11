@@ -10,7 +10,7 @@ export class Notifications extends Component {
       <div>
           <NavBar theme="black" />
         <div
-          className="row justify-content-center"
+          className="row justify-content-center container-fluid"
           style={{ backgroundColor: "#EEEEEE" }}
         >
           <h2

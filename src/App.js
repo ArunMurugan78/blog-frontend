@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import Bookmarked from "./bookmarked";
 import "./App.css";
+
 import Notifications from "./notifications";
 import store from "./store";
 import { Provider } from "react-redux";
@@ -34,6 +35,7 @@ function App() {
     <BrowserRouter>
       <AlertProvider template={AlertTemplate} {...options}>
         <Provider store={store}>
+          <div>
           <Switch>
             <Route component={LoginOptions} path="/continueWith" exact/>
             <Route component={Home} path="/home" exact />
@@ -48,7 +50,9 @@ function App() {
             <Route component={UpdateUser} path="/update" exact/>
             <Route component={Root} path="/" exact/>
             <Route component={NotFound} />
-          </Switch>{" "}
+          </Switch>
+          </div>
+         {" "}
         </Provider>{" "}
       </AlertProvider>{" "}
     </BrowserRouter>

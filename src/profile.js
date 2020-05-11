@@ -21,6 +21,9 @@ export class Profiles extends Component {
   };
   toggleFollow = async () => {
     try {
+      if(!this.props.state.isAuthenticated){
+        this.props.history.push('/continueWith');
+      }
       if (this.state.is_following) {
         this.setState({is_following:false})
         await axios.delete("/userdata/follow/" + this.props.match.params.id);
@@ -119,8 +122,8 @@ export class Profiles extends Component {
       <div style={{ backgroundColor: "#EEEEEE" }}>
           {this.state.isLoading?<div style={{position:'fixed',backgroundColor:'rgba(255,255,255)',width:'100vw',height:'100vh',top:0,zIndex:100}}></div>:null}
         <NavBar theme="black" />
-        {this.state.isLoading?<div className="d-flex justify-content-center"><div  style={{position:'fixed',top:'40vh',zIndex:10000}}><div class="lds-circle"><div></div></div><br/><small className="text-center ml-3">Loading....</small></div></div>: 
-        <div>
+        {this.state.isLoading?<div className="d-flex justify-content-center"><div  style={{position:'fixed',top:'40vh',zIndex:1000}}><div class="lds-circle"><div></div></div><br/></div></div>: 
+        <div className="container-fluid">
         <Row className="justify-content-around">
           <Col
             style={{ backgroundColor: "white" }}

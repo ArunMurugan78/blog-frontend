@@ -33,7 +33,7 @@ export class Search extends Component {
       <div>
         <NavBar theme="black" />
         {this.state.isLoading ? (
-          <div>
+          <div className="container-fluid">
           <div
             style={{
               position: "fixed",
