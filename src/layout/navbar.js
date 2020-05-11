@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { MdNotifications, MdAccountCircle } from "react-icons/md";
 import { RiAddLine } from "react-icons/ri";
 import { BsNewspaper } from "react-icons/bs";
+import { withRouter } from "react-router-dom";
 
 import { Navbar, Nav, FormControl, Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
@@ -10,10 +11,13 @@ import { AiOutlineClose } from "react-icons/ai";
 import "./sidenav.css";
 import { Link } from "react-router-dom";
 import "./navbar.css";
+
 export class NavBar extends Component {
   state = {
     showSideNav: false,
+    searchValue: "",
   };
+
   toggleSideNav = () => {
     this.setState((state) => ({ showSideNav: !state.showSideNav }));
   };
@@ -29,7 +33,6 @@ export class NavBar extends Component {
         fixed: "static",
       };
     }
-    
 
     // borderBottom:'5px solid #00adb5'
     return (
@@ -46,13 +49,15 @@ export class NavBar extends Component {
           <Link to="/home">
             <Navbar.Brand href="#home" className="mr-auto   order-md-0">
               <span
-                style={{
-                 // fontFamily: "'Raleway', sans-serif",
-                  // fontStyle:'italic',
-                  // fontWeight:'bold'
-                }}
+                style={
+                  {
+                    // fontFamily: "'Raleway', sans-serif",
+                    // fontStyle:'italic',
+                    // fontWeight:'bold'
+                  }
+                }
               >
-                Overload{" "}
+               Blogzz
               </span>
             </Navbar.Brand>
           </Link>
@@ -61,43 +66,72 @@ export class NavBar extends Component {
               <BsNewspaper
                 style={{ fontSize: "27px", color: "white" }}
                 className="my-auto mx-3"
-              />{" "}
-            </Link>{" "}
+              />
+            </Link>
             <Link to="/post/new">
               <RiAddLine
                 style={{ fontSize: "27px", color: "white" }}
                 className="my-auto mx-3"
-              />{" "}
-            </Link>{" "}
+              />
+            </Link>
+            <Link to="/notifications">
             <MdNotifications
               style={{ fontSize: "27px", color: "white" }}
               className="my-auto mx-3"
-            />
+            /></Link>
+          
             <MdAccountCircle
               onClick={this.toggleSideNav}
               style={{ fontSize: "27px", color: "white" }}
               className="my-auto mx-3"
             />
-          </div>{" "}
-          {/* <Navbar.Toggle aria-controls="menu" /> */}{" "}
+          </div>
+          {/* <Navbar.Toggle aria-controls="menu" /> */}
           <Navbar.Collapse id="menu">
-            <Form inline className="ml-md-4  order-md-1 mt-4 mt-md-0">
+            <Form
+              inline
+              className="ml-md-4  order-md-1 mt-4 mt-md-0"
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (this.state.searchValue) {
+                  this.props.history.push(
+                    "/search/" + this.state.searchValue.trim()
+                  );
+                }
+              }}
+            >
               <FormControl
                 type="text"
                 placeholder="Search Blogs..."
+                value={this.state.searchValue}
                 className="mx-1"
+                tabIndex="0"
+                autoFocus
+                onChange={(e) => this.setState({ searchValue: e.target.value })}
               />
-              <Button variant="outline-light" className="my-2">
-                Search{" "}
-              </Button>{" "}
-            </Form>{" "}
+
+              <Button
+                variant="outline-light"
+                type="submit"
+                className="my-2"
+                onClick={() => {
+                  if (this.state.searchValue) {
+                    this.props.history.push(
+                      "/search/" + this.state.searchValue.trim()
+                    );
+                  }
+                }}
+                tabIndex="1"
+              >
+                Search
+              </Button>
+            </Form>
             <Nav>
-              {" "}
               {/* <Nav.Link href="#home">Home</Nav.Link>
-               */}{" "}
-            </Nav>{" "}
+               */}
+            </Nav>
           </Navbar.Collapse>
-        </Navbar>{" "}
+        </Navbar>
         {this.state.showSideNav ? (
           <div>
             <div className="row">
@@ -110,7 +144,7 @@ export class NavBar extends Component {
                   backgroundColor: "rgba(0,0,0,0.4)",
                 }}
                 onClick={this.toggleSideNav}
-              ></div>{" "}
+              ></div>
               <Container
                 className="nav shadow col-xs-12 col-sm-6 col-md-3 animated faster slideInRight"
                 style={{ backgroundColor: "#393e46" }}
@@ -125,69 +159,66 @@ export class NavBar extends Component {
                     }}
                   >
                     <h3>
-                      {" "}
                       {this.props.state.isAuthenticated ? (
                         <span className="h5">
-                          {" "}
-                          {this.props.state.user.username}{" "}
+                          {this.props.state.user.username}
                         </span>
                       ) : (
                         <span className="h5">
-                          {" "}
                           <MdAccountCircle
                             style={{ fontSize: "35px", color: "white" }}
                             className="my-auto mx-2"
                           />
                         </span>
-                      )}{" "}
+                      )}
                       <span
                         className="h4 ml-4 float-right"
                         onClick={this.toggleSideNav}
                       >
                         <AiOutlineClose />
-                      </span>{" "}
-                    </h3>{" "}
-                  </ListGroup.Item>{" "}
+                      </span>
+                    </h3>
+                  </ListGroup.Item>
                   {this.props.state.isAuthenticated ? (
                     <div>
                       <Link to={"/profile/" + this.props.state.user.id}>
                         <ListGroup.Item className="sidelink">
                           Profile
-                        </ListGroup.Item>{" "}
-                      </Link>{" "}
+                        </ListGroup.Item>
+                      </Link>
                       <a href="/logout">
                         <ListGroup.Item className="sidelink">
-                          Logout{" "}
-                        </ListGroup.Item>{" "}
-                      </a>{" "}
+                          Logout
+                        </ListGroup.Item>
+                      </a>
                       <Link to={"/bookmarked"}>
                         <ListGroup.Item className="sidelink">
                           Bookmarked Blogs
-                        </ListGroup.Item>{" "}
-                      </Link>{" "}
+                        </ListGroup.Item>
+                      </Link>
                       <Link to={"/post/new"}>
                         <ListGroup.Item className="sidelink">
                           New Post
-                        </ListGroup.Item>{" "}
-                      </Link>{" "}
+                        </ListGroup.Item>
+                      </Link>
                     </div>
                   ) : (
                     <div>
                       <Link to="/continueWith">
                         <ListGroup.Item className="sidelink">
-                          Sign Up{" "}
-                        </ListGroup.Item>{" "}
-                      </Link>{" "}
+                          Sign Up
+                        </ListGroup.Item>
+                      </Link>
                       <Link to="/continueWith">
                         <ListGroup.Item className="sidelink">
                           Log in
-                        </ListGroup.Item>{" "}
-                      </Link>{" "}
+                        </ListGroup.Item>
+                      </Link>
                     </div>
-                  )}{" "}
-                </ListGroup>{" "}
-              </Container>{" "}
-            </div>{" "}
+                  )}
+                </ListGroup>
+              </Container>
+            </div>
           </div>
         ) : null}
       </div>
@@ -200,4 +231,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(NavBar);
+export default withRouter(connect(mapStateToProps)(NavBar));

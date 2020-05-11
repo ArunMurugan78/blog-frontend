@@ -20,7 +20,9 @@ const userReducer = (state = initialState, action) => {
                     id: action.data._id,
                     bookmarked: action.data.bookmarked,
                     liked: action.data.liked,
-                    description: action.data.description
+                    description: action.data.description,
+
+                    notifications: action.data.notifications
                 },
             };
         case SET_LIKE:

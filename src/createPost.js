@@ -1,6 +1,6 @@
 import React from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import { Button, Form, Container, Alert } from "react-bootstrap";
+import { Button, Form, Container, Alert ,Spinner} from "react-bootstrap";
 import axios from "axios";
 import NavBar from "./layout/navbar";
 import { Redirect } from "react-router-dom";
@@ -11,7 +11,7 @@ class CreatePost extends React.Component {
     content: "",
    
     title: null,
-
+    isLoading:false,
     errMsg: null,
   };
   componentDidMount() {
@@ -38,6 +38,7 @@ class CreatePost extends React.Component {
           this.setState({ id: res.data.id });
         })
         .catch((err) => console.log(err.message));
+        this.setState({isLoading:true})
     } else{
         let arr = [];
      
@@ -80,7 +81,7 @@ class CreatePost extends React.Component {
               />
               </Form.Group>
             
-            <Editor
+           { <Editor
               value="edit me!"
               apiKey="zqmpq244uf6a2hgzsvh69ao3vneet2snobiqvjddfod8m614"
               init={{
@@ -96,9 +97,11 @@ class CreatePost extends React.Component {
                   "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl",
               }}
               onEditorChange={this.handleEditorChange}
-            />
-            <Button size="lg" onClick={this.SubmitHandler}>
-              Submit
+            />}
+            <Button size="lg" onClick={this.SubmitHandler} disabled={this.state.isLoading}>
+              {this.state.isLoading?<Spinner animation="border" role="status">
+  <span className="sr-only">Loading...</span>
+</Spinner>:<span>Submit</span>}
             </Button>
           </Form>
         </Container>

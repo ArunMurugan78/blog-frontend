@@ -1,21 +1,20 @@
 import React from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import { Button, Form, Container, Alert } from "react-bootstrap";
+import { Button, Form, Container, Alert ,Spinner} from "react-bootstrap";
 import axios from "axios";
 import NavBar from "./layout/navbar";
-import { Redirect } from "react-router-dom";
+
 import { connect } from "react-redux";
 class EditPost extends React.Component {
   state = {
-  
     content: "",
-
+    isLoading: false,
     title: null,
 
     errMsg: null,
   };
   componentDidMount() {
-      console.log(this.props.match.params.id)
+    console.log(this.props.match.params.id);
     axios
       .get("/post/server/" + this.props.match.params.id)
       .then((res) =>
@@ -23,7 +22,7 @@ class EditPost extends React.Component {
       )
       .catch((err) => console.log(err.message));
   }
- 
+
   handleEditorChange = (content, editor) => {
     this.setState({ content: content, errMsg: null });
     console.log(this.props);
@@ -34,12 +33,13 @@ class EditPost extends React.Component {
     if (this.state.title && this.state.content) {
       console.log("[Posting the Post]", this.state.content);
       axios
-        .patch("/post/"+this.props.match.params.id, this.state)
+        .patch("/post/" + this.props.match.params.id, this.state)
         .then(() => {
-          console.log("Successfully updated the post !",this.props)
-          this.props.history.push('/post/'+this.props.match.params.id)
+          console.log("Successfully updated the post !", this.props);
+          this.props.history.push("/post/" + this.props.match.params.id);
         })
         .catch((err) => console.log(err.message));
+      this.setState({ isLoading: true });
     } else {
       let arr = [];
 
@@ -57,31 +57,30 @@ class EditPost extends React.Component {
     console.log("props", this.props);
     return (
       <div>
-     
         <NavBar theme="black" fixed={null} />{" "}
         <Container className="p-4">
+          {" "}
           {this.state.errMsg ? (
             <Alert
               variant="danger"
               onClose={() => this.setState({ errMsg: null })}
               dismissible
             >
-              <Alert.Heading> Oh snap!You got an error! </Alert.Heading>
-              <p> {this.state.errMsg} </p>
+              <Alert.Heading> Oh snap!You got an error! </Alert.Heading>{" "}
+              <p> {this.state.errMsg} </p>{" "}
             </Alert>
-          ) : null}
+          ) : null}{" "}
           <Form onSubmit={this.SubmitHandler}>
             <Form.Group controlId="title">
-              <Form.Label> Title </Form.Label>
+              <Form.Label> Title </Form.Label>{" "}
               <Form.Control
                 type="text"
                 placeholder="Enter a Title"
                 required
                 onChange={(e) => this.setState({ title: e.target.value })}
                 value={this.state.title}
-              />
+              />{" "}
             </Form.Group>
-
             <Editor
               apiKey="zqmpq244uf6a2hgzsvh69ao3vneet2snobiqvjddfod8m614"
               value={this.state.content}
@@ -98,12 +97,22 @@ class EditPost extends React.Component {
                   "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl",
               }}
               onEditorChange={this.handleEditorChange}
-            />
-            <Button size="lg" onClick={this.SubmitHandler}>
-              Submit
+            />{" "}
+            <Button
+              size="lg"
+              onClick={this.SubmitHandler}
+              disabled={this.state.isLoading}
+            >
+              {this.state.isLoading ? (
+                <Spinner animation="border" role="status">
+                  <span className="sr-only">Loading...</span>
+                </Spinner>
+              ) : (
+                <span>Submit</span>
+              )}
             </Button>
-          </Form>
-        </Container>
+          </Form>{" "}
+        </Container>{" "}
       </div>
     );
   }

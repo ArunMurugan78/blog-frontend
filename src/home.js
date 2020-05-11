@@ -36,11 +36,11 @@ function Home() {
   <div   style={{backgroundColor:'#EEEEEE',marginTop:'60px'}}>
       <div style={{color:'#222831',backgroundColor:'#00adb5'}} className="p-4">
        <h1 className="display-3">
-         Welcome to Coder's Blog !
+         Welcome to Blogzz !
        </h1>
-       <p   id="startchange">
-         This is a blog based on Programming . Write your first Blog Now !
-         </p>
+       <h3   id="startchange">
+           Write your first Blog Now !
+         </h3>
       </div>
 {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#00adb5" fill-opacity="1" d="M0,0L720,192L1440,96L1440,0L720,0L0,0Z"></path></svg>
     */}
@@ -59,12 +59,15 @@ function Home() {
   </Col>
 </Row>
 </Container >
+<Container>
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Neque egestas congue quisque egestas diam. Donec pretium vulputate sapien nec sagittis aliquam. Ultricies integer quis auctor elit sed. Massa sed elementum tempus egestas sed sed risus. Viverra ipsum nunc aliquet bibendum enim. Nunc sed augue lacus viverra vitae congue. Ante in nibh mauris cursus mattis molestie a iaculis at. Pellentesque habitant morbi tristique senectus et netus et. Malesuada pellentesque elit eget gravida. Pharetra diam sit amet nisl suscipit adipiscing bibendum est. Eleifend quam adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus. Neque laoreet suspendisse interdum consectetur. Tristique senectus et netus et malesuada fames ac.
 
 Lectus urna duis convallis convallis tellus id interdum velit laoreet. Hendrerit dolor magna eget est. Nullam ac tortor vitae purus faucibus ornare. Eget felis eget nunc lobortis mattis aliquam. Quisque egestas diam in arcu cursus euismod quis. Commodo ullamcorper a lacus vestibulum sed arcu non. Nunc non blandit massa enim nec dui. Venenatis urna cursus eget nunc. Elementum eu facilisis sed odio morbi quis commodo odio aenean. Orci phasellus egestas tellus rutrum tellus pellentesque eu tincidunt. Interdum varius sit amet mattis. In dictum non consectetur a erat nam at. Tempus urna et pharetra pharetra massa massa ultricies mi quis. Turpis tincidunt id aliquet risus feugiat in ante metus dictum. Lectus arcu bibendum at varius. Enim eu turpis egestas pretium aenean pharetra magna. Diam donec adipiscing tristique risus nec feugiat in fermentum posuere.
 
 Viverra tellus in hac habitasse platea. Aenean sed adipiscing diam donec adipiscing tristique. Ultricies mi eget mauris pharetra et ultrices neque. Commodo ullamcorper a lacus vestibulum sed arcu non. Senectus et netus et malesuada. Ullamcorper sit amet risus nullam eget felis eget. Tristique et egestas quis ipsum suspendisse. Mauris a diam maecenas sed enim ut sem viverra. Id donec ultrices tincidunt arcu non sodales neque sodales ut. Sed cras ornare arcu dui vivamus. Lobortis elementum nibh tellus molestie nunc non blandit. Duis ut diam quam nulla porttitor. Sollicitudin aliquam ultrices sagittis orci a scelerisque purus semper eget. Eget egestas purus viverra accumsan in nisl nisi scelerisque. Cum sociis natoque penatibus et magnis dis parturient. Quis varius quam quisque id diam vel quam elementum. Dolor magna eget est lorem. Sollicitudin aliquam ultrices sagittis orci a scelerisque purus semper eget.
- </div>
+ 
+</Container>
+</div>
  </div>
   );
 }
